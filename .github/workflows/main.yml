@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - master
+
+name: 🚀 Deploy website on push
+jobs:
+  ftp-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@master
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PWD }}
+        port: 21
+        protocol: ftp
+        exclude: .git*
+          - .git*/**
+          - README.md
+
